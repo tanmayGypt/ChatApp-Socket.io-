@@ -201,22 +201,6 @@
       const sendBtn = document.getElementById("sendBtn");
       const messageInput = document.getElementById("message");
       const allMessages = document.getElementById("messages");
-
-      socket.on("message", (message) => {
-        const p = document.createElement("p");
-        p.classList.add("msg-text");
-        p.classList.add("msg-bubble");
-        p.classList.add("left-msg");
-        p.classList.add("msg");
-        p.innerText = message;
-        allMessages.appendChild(p);
-      });
-
-      sendBtn.addEventListener("click", (e) => {
-        const message = messageInput.value;
-        console.log(message);
-        socket.emit("user-message", message);
-      });
       document
         .getElementById("sendBtn")
         .addEventListener("click", function (event) {
@@ -224,8 +208,22 @@
 
           messageInput.value = "";
         });
+      socket.on("message", async (message) => {
+        const p = document.createElement("p");
+        p.classList.add("msg-text");
+        p.classList.add("msg-bubble");
+        p.classList.add("left-msg");
+        p.classList.add("msg");
+        p.innerText = message;
+        await allMessages.appendChild(p);
+        allMessages.scrollTop = allMessages.scrollHeight;
+      });
 
-      allMessages.scrollTop = allMessages.scrollHeight;
+      sendBtn.addEventListener("click", (e) => {
+        const message = messageInput.value;
+        console.log(message);
+        socket.emit("user-message", message);
+      });
     </script>
   </body>
 </html>
