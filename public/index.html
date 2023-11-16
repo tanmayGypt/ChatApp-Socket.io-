@@ -202,12 +202,6 @@
       const messageInput = document.getElementById("message");
       const allMessages = document.getElementById("messages");
 
-      document
-        .getElementById("sendBtn")
-        .addEventListener("click", function (event) {
-          event.preventDefault();
-        });
-
       socket.on("message", (message) => {
         const p = document.createElement("p");
         p.classList.add("msg-text");
@@ -223,6 +217,13 @@
         console.log(message);
         socket.emit("user-message", message);
       });
+      document
+        .getElementById("sendBtn")
+        .addEventListener("click", function (event) {
+          event.preventDefault();
+
+          messageInput.value = "";
+        });
     </script>
   </body>
 </html>
