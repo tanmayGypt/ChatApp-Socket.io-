@@ -201,22 +201,16 @@
       const sendBtn = document.getElementById("sendBtn");
       const messageInput = document.getElementById("message");
       const allMessages = document.getElementById("messages");
-      document
-        .getElementById("sendBtn")
-        .addEventListener("click", function (event) {
-          event.preventDefault();
-
-          messageInput.value = "";
-        });
-      socket.on("message", async (message) => {
+     
+      socket.on("message",  (message) => {
         const p = document.createElement("p");
         p.classList.add("msg-text");
         p.classList.add("msg-bubble");
         p.classList.add("left-msg");
         p.classList.add("msg");
         p.innerText = message;
-        await allMessages.appendChild(p);
-        allMessages.scrollTop = allMessages.scrollHeight;
+        allMessages.appendChild(p);
+       
       });
 
       sendBtn.addEventListener("click", (e) => {
@@ -224,6 +218,15 @@
         console.log(message);
         socket.emit("user-message", message);
       });
+
+       document
+        .getElementById("sendBtn")
+        .addEventListener("click", function (event) {
+          event.preventDefault();
+
+          messageInput.value = "";
+           allMessages.scrollTop = allMessages.scrollHeight;
+        });
     </script>
   </body>
 </html>
